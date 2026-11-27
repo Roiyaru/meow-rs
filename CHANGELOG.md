@@ -8,6 +8,18 @@ the canonical, in-repo source a release is cut from.
 
 ## [Unreleased]
 
+### Fixed
+
+- `proxy-providers.*.filter` / `exclude-filter` and the group-level fields
+  of the same name now compile with `fancy-regex`, which supports the
+  look-around assertions mihomo accepts. A config using the common airport
+  idiom `^(?!.*(剩余流量|到期|官网))` used to fail its provider build — the
+  provider and every group depending on it then vanished from the runtime
+  registry while the rules still pointed at them, so the traffic fell
+  through to `MATCH`/DIRECT. Plain patterns keep the linear-time `regex`
+  path; an evaluation-time backtracking failure is logged and treated as a
+  non-match.
+
 ## [0.30.0] - 2026-11-26
 
 ### Added
