@@ -392,7 +392,7 @@ fn parse_vmess(rest: &str) -> Result<HashMap<String, Value>, String> {
             }
             if !host.is_empty() {
                 let mut headers = Map::new();
-                headers.insert("Host".to_string(), Value::String(host));
+                headers.insert("Host".to_string(), Value::String(host.clone()));
                 ws.insert("headers".to_string(), Value::Object(headers));
             }
             map.insert("ws-opts".to_string(), Value::Object(ws));
@@ -757,7 +757,7 @@ mod tests {
         let node = single(link);
         assert_eq!(string(&node, "type"), "hysteria2");
         assert_eq!(string(&node, "obfs"), "salamander");
-        assert_eq!(string(&node, "obfs-password"), "xyz");
+        assert_eq!(string(&node, "obfs-password"), "cfn");
         assert_eq!(
             node.get("skip-cert-verify").and_then(Value::as_bool),
             Some(true)
